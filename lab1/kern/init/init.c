@@ -32,6 +32,10 @@ int kern_init(void) {
     clock_init();  // init clock interrupt
 
     intr_enable();  // enable irq interrupt
+
+    //初始化结束后增加两种中断，测试代码
+    __asm__ __volatile__("mret");
+    __asm__ __volatile__("ebreak");
     
     while (1)
         ;
