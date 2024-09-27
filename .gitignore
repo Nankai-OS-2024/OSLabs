@@ -1,0 +1,27 @@
+# 忽略所有环境文件
+riscv64/
+qemu-4.1.1/
+.vscode/
+qemu-4.1.1.tar.xz
+
+# 忽略lab中所有内容
+lab0/*
+lab1/*
+
+# 保留lab中 kern/, libs/, 和 tools/ 目录
+!lab0/kern/
+!lab0/libs/
+!lab0/tools/
+
+!lab1/kern/
+!lab1/libs/
+!lab1/tools/
+
+# 保留lab中 kern/, libs/, tools/ 目录下的所有文件
+!lab0/kern/**
+!lab0/libs/**
+!lab0/tools/**
+
+!lab1/kern/**
+!lab1/libs/**
+!lab1/tools/**
