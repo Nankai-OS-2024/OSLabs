@@ -65,7 +65,7 @@ size_t nr_free_pages(void); // number of free pages
  * KADDR - takes a physical address and returns the corresponding kernel virtual
  * address. It panics if you pass an invalid physical address.
  * */
-/*
+
 #define KADDR(pa)                                                \
     ({                                                           \
         uintptr_t __m_pa = (pa);                                 \
@@ -75,7 +75,7 @@ size_t nr_free_pages(void); // number of free pages
         }                                                        \
         (void *)(__m_pa + va_pa_offset);                         \
     })
-*/
+
 extern struct Page *pages;
 extern size_t npage;
 extern const size_t nbase;

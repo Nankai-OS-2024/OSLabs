@@ -10,6 +10,7 @@
 #include <string.h>
 #include <../sync/sync.h>
 #include <riscv.h>
+#include <buddy_system_pmm.h>
 
 // virtual address of physical page array
 struct Page *pages;
@@ -32,9 +33,8 @@ const struct pmm_manager *pmm_manager;
 static void check_alloc_page(void);
 
 // init_pmm_manager - initialize a pmm_manager instance
-static void init_pmm_manager(void)
-{
-    pmm_manager = &best_fit_pmm_manager;
+static void init_pmm_manager(void) {
+    pmm_manager = &buddy_pmm_manager;
     cprintf("memory management: %s\n", pmm_manager->name);
     pmm_manager->init();
 }
@@ -133,7 +133,7 @@ void pmm_init(void)
     // Then pmm can alloc/free the physical memory.
     // Now the first_fit/best_fit/worst_fit/buddy_system pmm are available.
     init_pmm_manager();
-
+    
     // detect physical memory space, reserve already used memory,
     // then use pmm->init_memmap to create free page list
     page_init();
