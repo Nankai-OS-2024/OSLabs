@@ -34,7 +34,7 @@ struct pmm_manager {
 
 extern const struct pmm_manager *pmm_manager;
 
-void pmm_init(void);
+void pmm_init(const char* manager_name);
 
 struct Page *alloc_pages(size_t n);
 void free_pages(struct Page *base, size_t n);

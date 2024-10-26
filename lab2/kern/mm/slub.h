@@ -39,6 +39,17 @@ struct slab_t
     list_entry_t slab_link;
 };
 
+// 双层结构存储的实际对象（obj块）
+#define TEST_OBJECT_LENTH 1024 // 设置obj结构体的大小为1024
+
+static const char *test_object_name = "test";
+
+struct test_object
+{
+    char test_member[TEST_OBJECT_LENTH];
+};
+
+// 一些个函数声明
 struct kmem_cache_t *kmem_cache_create(const char *name, size_t size);
 void kmem_cache_destroy(struct kmem_cache_t *cachep);
 void *kmem_cache_alloc(struct kmem_cache_t *cachep);

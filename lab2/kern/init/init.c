@@ -25,15 +25,21 @@ int kern_init(void)
     print_kerninfo();
 
     // grade_backtrace();
+    
     idt_init(); // init interrupt descriptor table
 
-    pmm_init(); // init physical memory management
+    pmm_init("first_fit");
+
+    pmm_init("best_fit");
+    
+    pmm_init("buddy_system"); // init physical memory management
 
     kmem_init(); // init kmem_cache which contains slabs
 
     idt_init(); // init interrupt descriptor table
 
     clock_init();  // init clock interrupt
+    
     intr_enable(); // enable irq interrupt
 
     /* do nothing */

@@ -286,7 +286,7 @@ static void alloc_check(void) {
     // 分配四个页面，并确保分配成功
     for (int i = 0; i < num_pages_to_alloc; i++) {
         assert((pages[i] = alloc_page()) != NULL);
-        cprintf("Allocated page %d at address %p\n", i + 1, pages[i]);
+        cprintf("[buddy sysetm] allocated page %d at address %p\n", i + 1, pages[i]);
     }
 
     // 确保连续分配的页面相邻
@@ -309,7 +309,7 @@ static void alloc_check(void) {
     while ((le = list_next(le)) != &free_list) {
         page = le2page(le, page_link);
         assert(buddy_allocate_pages(page->property) != NULL);
-        cprintf("Allocated from free list: %p\n", page);
+        cprintf("[buddy sysetm] allocated from free list: %p\n", page);
     }
 
     // 检查分配失败的情况
@@ -318,46 +318,46 @@ static void alloc_check(void) {
     // 释放分配的页面
     for (int i = 0; i < num_pages_to_alloc - 1; i++) {
         free_page(pages[i]);
-        cprintf("Freed page %d at address %p\n", i + 1, pages[i]);
+        cprintf("[buddy sysetm] freed page %d at address %p\n", i + 1, pages[i]);
     }
     assert(nr_free == 4); // 确保空闲页面数正确
-    cprintf("Number of free pages: %d\n", nr_free);
+    cprintf("[buddy sysetm] number of free pages: %d\n", nr_free);
     
 
     // 重新分配页面
     struct Page *allocated_page;
     assert((allocated_page = alloc_page()) != NULL);
-    cprintf("Reallocated a single page at %p\n", allocated_page);
+    cprintf("[buddy sysetm] reallocated a single page at %p\n", allocated_page);
     
     struct Page *double_allocated_page = alloc_pages(2);
     assert(double_allocated_page != NULL);
-    cprintf("Allocated two pages at %p\n", double_allocated_page);
+    cprintf("[buddy sysetm] allocated two pages at %p\n", double_allocated_page);
 
     // 重新分配页面
     struct Page *allocated_page_second;
     assert((allocated_page_second = alloc_page()) != NULL);
-    cprintf("Reallocated a single page again at %p\n", allocated_page_second);
+    cprintf("[buddy sysetm] reallocated a single page again at %p\n", allocated_page_second);
     
     // 检查再次分配失败
     assert(alloc_page() == NULL);
-    cprintf("Second allocation failed as expected\n");
+    cprintf("[buddy sysetm] second allocation failed as expected\n");
 
     // 释放页面
     free_pages(double_allocated_page, 2);
-    cprintf("Freed two pages starting at %p\n", double_allocated_page);
+    cprintf("[buddy sysetm] freed two pages starting at %p\n", double_allocated_page);
     free_page(allocated_page);
-    cprintf("Freed the reallocated page at %p\n", allocated_page);
+    cprintf("[buddy sysetm] freed the reallocated page at %p\n", allocated_page);
     free_page(allocated_page_second);
-    cprintf("Freed the reallocated page again at %p\n", allocated_page_second);
+    cprintf("[buddy sysetm] freed the reallocated page again at %p\n", allocated_page_second);
 
     // 再次分配页面
     assert((page = alloc_pages(4)) == allocated_page);
-    cprintf("Allocated four pages starting at %p\n", allocated_page);
+    cprintf("[buddy sysetm] allocated four pages starting at %p\n", allocated_page);
     assert(alloc_page() == NULL);
-    cprintf("Final allocation succeeded as expected\n");
+    cprintf("[buddy sysetm] final allocation succeeded as expected\n");
 
     assert(nr_free == 0); // 确保没有空闲页面
-    cprintf("No free pages remaining\n");
+    cprintf("[buddy sysetm] no free pages remaining\n");
 
     // 重新标记物理区域
     for (page = physical_area; page < physical_area + total_size_store; page++) {
@@ -365,7 +365,7 @@ static void alloc_check(void) {
     }
     buddy_init();
     buddy_init_memmap(physical_area, total_size_store);
-    cprintf("Memory re-initialized and reserved\n");
+    cprintf("[buddy sysetm] memory re-initialized and reserved\n");
 }
 
 

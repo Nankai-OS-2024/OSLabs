@@ -5,13 +5,12 @@
 #include <stdio.h>
 #include <pmm.h>
 
-// ! 默认值
+// 默认值
 #define DEFAULT_CTVAL 0x0
 #define DEFAULT_DTVAL 0x1
 #define SIZED_CACHE_NUM 8
-// ! 默认值结束
 
-// ! 工具函数
+// 工具函数
 #define le2slab(le, link) ((struct slab_t *)le2page((struct Page *)le, link))
 #define slab2kva(slab) (page2kva((struct Page *)slab))
 
@@ -30,21 +29,28 @@ static int kmem_sized_index(size_t size)
     }
     return index;
 }
-// ! 工具函数结束
 
-// ! 全局变量
+static size_t list_length(list_entry_t *listelm)
+{
+    size_t len = 0;
+    list_entry_t *le = listelm;
+    while ((le = list_next(le)) != listelm){
+        len++;
+    }
+    return len;
+}
+
+// 全局变量
 static list_entry_t cache_chain;
 static struct kmem_cache_t cache_cache; // 这个cache很特殊，它是包括了所有其它小cache的大cache，全局只有一个
 static struct kmem_cache_t *sized_caches[SIZED_CACHE_NUM];
 static char *cache_cache_name = "cache";
 static char *sized_cache_name = "sized";
-// ! 全局变量结束
 
-// ! 函数声明
+// 函数声明
 static void kmem_slab_destroy(struct kmem_cache_t *cachep, struct slab_t *slab);
-// ! 函数声明结束
 
-// ! 第一层结构
+// 第一层结构
 /* 创建一个kmem_cache */
 struct kmem_cache_t *kmem_cache_create(const char *name, size_t size)
 {
@@ -144,14 +150,13 @@ int kmem_cache_reap()
         count += kmem_cache_shrink(to_struct(le, struct kmem_cache_t, cache_link));
     return count;
 }
-// ! 第一层结构结束
 
-// ! 第二层结构
+// 第二层结构
 /* 从pmm_manager中申请一页内存作为完全空闲的slab */
 static void *kmem_cache_grow(struct kmem_cache_t *cachep)
 {
     struct Page *page = alloc_pages(1);
-    cprintf("allocate page for kmem_cache, address: %p\n", page2pa(page));
+    cprintf("[slub] allocate page for kmem_cache, address: %p\n", page2pa(page));
     void *kva = page2kva(page);
     struct slab_t *slab = (struct slab_t *)page;
     slab->cachep = cachep;
@@ -196,9 +201,8 @@ static void kmem_slab_destroy(struct kmem_cache_t *cachep, struct slab_t *slab)
     list_del(&(page->page_link));
     free_page(page);
 }
-// ! 第二层结构结束
 
-// ! 第三层结构
+// 第三层结构
 /* 从cachep指向的仓库中分配一个对象，返回指向对象的指针objp */
 void *kmem_cache_alloc(struct kmem_cache_t *cachep)
 {
@@ -248,35 +252,12 @@ void kmem_cache_free(struct kmem_cache_t *cachep, void *objp)
     else
         list_add(&(cachep->slabs_partial), &(slab->slab_link));
 }
-// ! 第三层结构结束
 
 // ! 测试部分代码
-#define TEST_OBJECT_LENTH 1024 // 设置obj结构体的大小为1024，对应存储1024大小obj的cache
-
-static const char *test_object_name = "test";
-
-struct test_object
-{
-    char test_member[TEST_OBJECT_LENTH];
-};
-
-static size_t list_length(list_entry_t *listelm)
-{
-    size_t len = 0;
-    list_entry_t *le = listelm;
-    while ((le = list_next(le)) != listelm){
-        len++;
-    }
-    return len;
-}
-
 static void check_kmem()
 {
-
     assert(sizeof(struct Page) == sizeof(struct slab_t)); // 页的大小等于slab的大小
-
     size_t fp = nr_free_pages();
-
     // 创建一个测试仓库，初始化对象内存空间全为TEST_OBJECT_CTVAL
     // test_object大小为1024字节
     struct kmem_cache_t *cp0 = kmem_cache_create(test_object_name, sizeof(struct test_object));
@@ -341,10 +322,11 @@ static void check_kmem()
     // 空闲页复原
     assert(nr_free_pages() == fp);
 
-    cputs("check_kmem() succeeded, all test passed!\n");
+    cputs("[slub] check_kmem() succeeded, all test passed!\n");
 }
 // ! 测试部分代码结束
 
+// 在init.c中调用的函数
 void kmem_init()
 {
     // 1. 初始化kmem_cache的cache仓库，简称为cache_cache
