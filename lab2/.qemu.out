@@ -1,0 +1,123 @@
+
+OpenSBI v0.4 (Jul  2 2019 11:53:53)
+   ____                    _____ ____ _____
+  / __ \                  / ____|  _ \_   _|
+ | |  | |_ __   ___ _ __ | (___ | |_) || |
+ | |  | | '_ \ / _ \ '_ \ \___ \|  _ < | |
+ | |__| | |_) |  __/ | | |____) | |_) || |_
+  \____/| .__/ \___|_| |_|_____/|____/_____|
+        | |
+        |_|
+
+Platform Name          : QEMU Virt Machine
+Platform HART Features : RV64ACDFIMSU
+Platform Max HARTs     : 8
+Current Hart           : 0
+Firmware Base          : 0x80000000
+Firmware Size          : 112 KB
+Runtime SBI Version    : 0.1
+
+PMP0: 0x0000000080000000-0x000000008001ffff (A)
+PMP1: 0x0000000000000000-0xffffffffffffffff (A,R,W,X)
+(THU.CST) os is loading ...
+Special kernel symbols:
+  entry  0xffffffffc0200032 (virtual)
+  etext  0xffffffffc0203d86 (virtual)
+  edata  0xffffffffc0209010 (virtual)
+  end    0xffffffffc0209560 (virtual)
+Kernel executable memory footprint: 38KB
+[pmm] memory management: default_pmm_manager
+[pmm] physcial memory map:
+[pmm]   memory: 0x0000000007e00000, [0x0000000080200000, 0x0000000087ffffff].
+[first fit] default_check() started
+[first fit] default_check() succeeded
+[pmm] check_alloc_page() succeeded!
+[pmm] satp virtual address: 0xffffffffc0208000
+[pmm] satp physical address: 0x0000000080208000
+[pmm] memory management: best_fit_pmm_manager
+[pmm] physcial memory map:
+[pmm]   memory: 0x0000000007e00000, [0x0000000080200000, 0x0000000087ffffff].
+[best fit] basic_check() started
+[best fit] basic_check() succeeded
+[pmm] check_alloc_page() succeeded!
+[pmm] satp virtual address: 0xffffffffc0208000
+[pmm] satp physical address: 0x0000000080208000
+[pmm] memory management: buddy_pmm_manager
+[pmm] physcial memory map:
+[pmm]   memory: 0x0000000007e00000, [0x0000000080200000, 0x0000000087ffffff].
+[buddy sysetm] allocated page 1 at address 0xffffffffc0212430
+[buddy sysetm] allocated page 2 at address 0xffffffffc0212458
+[buddy sysetm] allocated page 3 at address 0xffffffffc0212480
+[buddy sysetm] allocated page 4 at address 0xffffffffc02124a8
+[buddy sysetm] allocated page 5 at address 0xffffffffc02124d0
+[buddy sysetm] allocated from free list: 0xffffffffc02124f8
+[buddy sysetm] allocated from free list: 0xffffffffc0212520
+[buddy sysetm] allocated from free list: 0xffffffffc0212570
+[buddy sysetm] allocated from free list: 0xffffffffc02126b0
+[buddy sysetm] allocated from free list: 0xffffffffc0212930
+[buddy sysetm] allocated from free list: 0xffffffffc0212e30
+[buddy sysetm] allocated from free list: 0xffffffffc0213830
+[buddy sysetm] allocated from free list: 0xffffffffc0214c30
+[buddy sysetm] allocated from free list: 0xffffffffc021c390
+[buddy sysetm] allocated from free list: 0xffffffffc021c2f0
+[buddy sysetm] allocated from free list: 0xffffffffc021c1b0
+[buddy sysetm] allocated from free list: 0xffffffffc021bf30
+[buddy sysetm] allocated from free list: 0xffffffffc021ba30
+[buddy sysetm] allocated from free list: 0xffffffffc021b030
+[buddy sysetm] allocated from free list: 0xffffffffc0219c30
+[buddy sysetm] allocated from free list: 0xffffffffc0217430
+[buddy sysetm] freed page 1 at address 0xffffffffc0212430
+[buddy sysetm] freed page 2 at address 0xffffffffc0212458
+[buddy sysetm] freed page 3 at address 0xffffffffc0212480
+[buddy sysetm] freed page 4 at address 0xffffffffc02124a8
+[buddy sysetm] number of free pages: 4
+[buddy sysetm] reallocated a single page at 0xffffffffc0212430
+[buddy sysetm] allocated two pages at 0xffffffffc0212480
+[buddy sysetm] reallocated a single page again at 0xffffffffc0212458
+[buddy sysetm] second allocation failed as expected
+[buddy sysetm] freed two pages starting at 0xffffffffc0212480
+[buddy sysetm] freed the reallocated page at 0xffffffffc0212430
+[buddy sysetm] freed the reallocated page again at 0xffffffffc0212458
+[buddy sysetm] allocated four pages starting at 0xffffffffc0212430
+[buddy sysetm] final allocation succeeded as expected
+[buddy sysetm] no free pages remaining
+[buddy sysetm] memory re-initialized and reserved
+[pmm] check_alloc_page() succeeded!
+[pmm] satp virtual address: 0xffffffffc0208000
+[pmm] satp physical address: 0x0000000080208000
+[slub] allocate page for kmem_cache, address: 0x803ca000
+[slub] allocate page for kmem_cache, address: 0x803cb000
+[slub] allocate page for kmem_cache, address: 0x803cc000
+[slub] allocate page for kmem_cache, address: 0x803cb000
+[slub] check_kmem() succeeded, all test passed!
+
+++ setup timer interrupts
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks
+100 ticks

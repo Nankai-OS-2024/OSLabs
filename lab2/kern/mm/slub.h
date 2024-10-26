@@ -6,17 +6,6 @@
 
 #define CACHE_NAMELEN 32
 
-#define KADDR(pa)                                                \
-    ({                                                           \
-        uintptr_t __m_pa = (pa);                                 \
-        size_t __m_ppn = PPN(__m_pa);                            \
-        if (__m_ppn >= npage)                                    \
-        {                                                        \
-            panic("KADDR called with invalid pa %08lx", __m_pa); \
-        }                                                        \
-        (void *)(__m_pa + va_pa_offset);                         \
-    })
-
 // 双层结构的第一层（kmem缓存）
 struct kmem_cache_t
 {
