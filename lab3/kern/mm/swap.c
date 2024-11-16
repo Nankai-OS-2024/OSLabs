@@ -18,7 +18,6 @@
 // the max access seq number
 #define MAX_SEQ_NO 10
 
-static struct swap_manager *sm;
 size_t max_swap_offset;
 
 volatile int swap_init_ok = 0;

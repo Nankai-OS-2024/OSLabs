@@ -120,20 +120,25 @@ _lru_tick_event(struct mm_struct *mm)
 {
     list_entry_t *head = (list_entry_t *)mm->sm_priv;
     assert(head != NULL);
-    curr_ptr = list_next(head);
+    curr_ptr = list_next(head); // 当前指针初始化为链表的下一个元素
+
     while (curr_ptr != head)
     {
         struct Page *page = le2page(curr_ptr, pra_page_link);
         pte_t *ptep = get_pte(mm->pgdir, page->pra_vaddr, 0);
+
         if (*ptep & PTE_A)
         {
-            list_del(curr_ptr);
-            list_add(head, curr_ptr);
-            *ptep &= ~PTE_A;
-            tlb_invalidate(mm->pgdir, page->pra_vaddr);
+            list_del(curr_ptr);                         // 从链表中删除当前节点
+            list_add(head, curr_ptr);                   // 将当前节点添加到链表头部
+            *ptep &= ~PTE_A;                            // 清除访问位
+            tlb_invalidate(mm->pgdir, page->pra_vaddr); // 使TLB失效
         }
-        curr_ptr = list_prev(head);
+
+        // 使用临时指针更新 curr_ptr
+        curr_ptr = list_next(curr_ptr); // 更新 curr_ptr 为下一个节点
     }
+
     cprintf("_lru_tick_event is called!\n");
     return 0;
 }
