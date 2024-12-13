@@ -110,12 +110,12 @@ alloc_proc(void) {
     proc->parent = NULL;
     proc->mm = NULL;
    
-    //³õÊ¼»¯ÉÏÏÂÎÄ
+    //åˆå§‹åŒ–ä¸Šä¸‹æ–‡
     memset(&(proc->context), 0, sizeof(struct context));
     proc->tf = NULL;
     proc->cr3 = boot_cr3;
     proc->flags = 0;
-    //³õÊ¼»¯½ø³ÌÃû
+    //åˆå§‹åŒ–ä¸Šä¸‹æ–‡
     memset(proc->name, 0, PROC_NAME_LEN);
 
 
@@ -325,7 +325,7 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     if((proc =  alloc_proc()) == NULL){
         goto fork_out;
     }
-    proc->parent = current; // ÉèÖÃ¸¸½ø³Ì
+    proc->parent = current; // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½
     if(setup_kstack(proc)){
         goto bad_fork_cleanup_kstack;
     }
@@ -334,16 +334,16 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     }
     copy_thread(proc, stack, tf);
     bool intr_flag;
-    local_intr_save(intr_flag); // ½ûÓÃÖÐ¶Ï
+    local_intr_save(intr_flag); // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
     {
-        //  ÉèÖÃ½ø³Ìpid£¬½«½ø³Ì·ÅÈë¹þÏ£±í£¬½«½ø³ÌµÄÁ´±í±äÁ¿·ÅÈëÁ´±íÄÚ
+        //  ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½pidï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         proc->pid = get_pid();
         hash_proc(proc);
         list_add(&proc_list, &(proc->list_link));
-        nr_process++;           // ½ø³ÌÊýÔö¼Ó
+        nr_process++;           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         
     }
-    local_intr_restore(intr_flag); // ±£´æÖÐ¶Ï
+    local_intr_restore(intr_flag); // ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
     wakeup_proc(proc);
     ret = proc->pid;
 

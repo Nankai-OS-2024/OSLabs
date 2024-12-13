@@ -8120,7 +8120,7 @@ ffffffffc0204230:	e11c                	sd	a5,0(a0)
     proc->parent = NULL;
     proc->mm = NULL;
    
-    //³õÊ¼»¯ÉÏÏÂÎÄ
+    //åˆå§‹åŒ–ä¸Šä¸‹æ–‡
     memset(&(proc->context), 0, sizeof(struct context));
 ffffffffc0204232:	07000613          	li	a2,112
 ffffffffc0204236:	4581                	li	a1,0
@@ -8147,7 +8147,7 @@ ffffffffc020425c:	0a043023          	sd	zero,160(s0)
 ffffffffc0204260:	f45c                	sd	a5,168(s0)
     proc->flags = 0;
 ffffffffc0204262:	0a042823          	sw	zero,176(s0)
-    //³õÊ¼»¯½ø³ÌÃû
+    //åˆå§‹åŒ–ä¸Šä¸‹æ–‡
     memset(proc->name, 0, PROC_NAME_LEN);
 ffffffffc0204266:	463d                	li	a2,15
 ffffffffc0204268:	4581                	li	a1,0
@@ -8325,13 +8325,13 @@ ffffffffc020438a:	8432                	mv	s0,a2
 ffffffffc020438c:	e8fff0ef          	jal	ra,ffffffffc020421a <alloc_proc>
 ffffffffc0204390:	89aa                	mv	s3,a0
 ffffffffc0204392:	24050f63          	beqz	a0,ffffffffc02045f0 <do_fork+0x286>
-    proc->parent = current; // ÉèÖÃ¸¸½ø³Ì
+    proc->parent = current; // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½
 ffffffffc0204396:	00012a17          	auipc	s4,0x12
 ffffffffc020439a:	21aa0a13          	addi	s4,s4,538 # ffffffffc02165b0 <current>
 ffffffffc020439e:	000a3783          	ld	a5,0(s4)
     struct Page *page = alloc_pages(KSTACKPAGE);
 ffffffffc02043a2:	4509                	li	a0,2
-    proc->parent = current; // ÉèÖÃ¸¸½ø³Ì
+    proc->parent = current; // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½
 ffffffffc02043a4:	02f9b023          	sd	a5,32(s3)
     struct Page *page = alloc_pages(KSTACKPAGE);
 ffffffffc02043a8:	e84fd0ef          	jal	ra,ffffffffc0201a2c <alloc_pages>
@@ -8434,7 +8434,7 @@ ffffffffc020449e:	953e                	add	a0,a0,a5
 ffffffffc02044a0:	6510                	ld	a2,8(a0)
 ffffffffc02044a2:	0d898793          	addi	a5,s3,216
 ffffffffc02044a6:	6414                	ld	a3,8(s0)
-        nr_process++;           // ½ø³ÌÊýÔö¼Ó
+        nr_process++;           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ffffffffc02044a8:	4098                	lw	a4,0(s1)
     prev->next = next->prev = elm;
 ffffffffc02044aa:	e21c                	sd	a5,0(a2)
@@ -8447,7 +8447,7 @@ ffffffffc02044b2:	0c898793          	addi	a5,s3,200
 ffffffffc02044b6:	0ca9bc23          	sd	a0,216(s3)
     prev->next = next->prev = elm;
 ffffffffc02044ba:	e29c                	sd	a5,0(a3)
-        nr_process++;           // ½ø³ÌÊýÔö¼Ó
+        nr_process++;           // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ffffffffc02044bc:	2705                	addiw	a4,a4,1
 ffffffffc02044be:	e41c                	sd	a5,8(s0)
     elm->next = next;
