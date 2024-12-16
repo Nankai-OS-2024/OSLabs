@@ -365,11 +365,24 @@ int copy_range(pde_t *to, pde_t *from, uintptr_t start, uintptr_t end,
             uint32_t perm = (*ptep & PTE_USER);
             // get page from ptep
             struct Page *page = pte2page(*ptep);
-            // alloc a page for process B
-            struct Page *npage = alloc_page();
+            // alloc a page for process B, when using cow ,it's needless
+            //struct Page *npage = alloc_page();
+            //assert(npage != NULL);
             assert(page != NULL);
-            assert(npage != NULL);
             int ret = 0;
+            if(share){
+                cprintf("Sharing the page 0x%x\n", page2kva(page));
+                page_insert(from, page, start, perm & (~PTE_W));
+                ret = page_insert(to, page, start, perm & (~PTE_W));
+            }else{
+                struct Page *npage = alloc_page();
+                assert(npage != NULL);
+                cprintf("alloc a new page 0x%x\n", page2kva(npage));
+                void *src_kvaddr = page2kva(page);
+                void *dst_kvaddr = page2kva(npage);
+                memcpy(dst_kvaddr, src_kvaddr, PGSIZE);
+                ret = page_insert(to, npage, start, perm);
+            }
             /* LAB5:EXERCISE2 YOUR CODE
              * replicate content of page to npage, build the map of phy addr of
              * nage with the linear addr start
@@ -388,7 +401,17 @@ int copy_range(pde_t *to, pde_t *from, uintptr_t start, uintptr_t end,
              * (3) memory copy from src_kvaddr to dst_kvaddr, size is PGSIZE
              * (4) build the map of phy addr of  nage with the linear addr start
              */
+            // (1) 获取源页的内核虚拟地址
+            //void *src_kvaddr = page2kva(page);
 
+            // (2) 为目标页分配物理页面，并获取其内核虚拟地址
+            //void *dst_kvaddr = page2kva(npage);
+
+            // (3) 将源页面内容复制到目标页面
+            //memcpy(dst_kvaddr, src_kvaddr, PGSIZE);
+
+            // (4) 在目标页表中建立线性地址到新物理页面的映射
+            //ret = page_insert(to, npage, start, perm);
 
             assert(ret == 0);
         }

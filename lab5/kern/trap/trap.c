@@ -217,6 +217,7 @@ void exception_handler(struct trapframe *tf) {
             break;
         case CAUSE_USER_ECALL:
             //cprintf("Environment call from U-mode\n");
+            //avoid repetitive execution
             tf->epc += 4;
             syscall();
             break;
